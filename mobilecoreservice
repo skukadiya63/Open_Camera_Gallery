@@ -1,0 +1,72 @@
+// import must be declare
+
+
+import MobileCoreServices
+
+
+class UserprofileViewController: UIViewController,UIPickerViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate
+
+view Didload(){
+
+
+ imagePicker.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
+
+}
+
+  @IBAction func btnclickedopencamera(_ sender: Any) {
+        
+        let aleart = UIAlertController(title: "Select an option", message: "", preferredStyle: .actionSheet)
+        aleart.addAction(UIAlertAction(title: "Capture By Camera", style: .default, handler: { (smit) in
+            self.openCamera()
+            
+        }))
+        
+        aleart.addAction(UIAlertAction(title: "Select From Gallery", style: .default, handler: { (smit) in
+            self.openGallary()
+        }))
+        aleart.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { (smit) in
+            self
+            
+        }))
+        self.present(aleart, animated: true, completion: nil)
+        
+        
+    }
+    
+    
+// out of couse code
+    
+func openCamera()
+    {
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerController.SourceType.camera))
+        {
+            UIView.animate(withDuration: 10.5) {
+                
+                self.view.endEditing(true)
+            }
+            imagePicker.sourceType = UIImagePickerController.SourceType.camera
+            imagePicker.allowsEditing = true
+            imagePicker.mediaTypes = [kUTTypeImage as String]
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        else
+        {
+            UIView.animate(withDuration: 10.5) {
+                
+                self.view.endEditing(true)
+            }
+            self.view.makeToast("You don't have camera")
+        }
+    }
+    
+func openGallary(){
+        UIView.animate(withDuration: 10.5) {
+            //            self.mainViewBG.isHidden = true
+            //            self.popupView.isHidden = true
+            self.view.endEditing(true)
+        }
+        imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+        imagePicker.allowsEditing = true
+        imagePicker.mediaTypes = ["public.image"]
+        self.present(imagePicker, animated: true, completion: nil)
+    }
